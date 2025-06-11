@@ -1,9 +1,24 @@
-# OPÇÃO 3: Se index.php está na raiz
-[start]
-cmd = 'php -S 0.0.0.0:$PORT'
+[phases.setup]
+nixPkgs = ['php82', 'php82Packages.composer']
 
-# OPÇÃO 4: Forçar criação do diretório
-# [phases.build]
-# cmds = ['mkdir -p public && [ ! -f public/index.php ] && cp index.php public/ || true']
-# [start]
-# cmd = 'php -S 0.0.0.0:$PORT -t public'
+[phases.install]
+cmds = ['composer install --no-dev --no-interaction']
+
+[phases.build]
+cmds = [
+  'echo "Creating router.php for Mautic..."',
+  'cat > router.php << EOF',
+  '<?php',
+  'if (php_sapi_name() === "cli-server") {',
+  '    $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);',
+  '    if ($path !== "/" && file_exists(__DIR__ . $path)) {',
+  '        return false;',
+  '    }',
+  '    $_SERVER["SCRIPT_NAME"] = "/index.php";',
+  '    require_once __DIR__ . "/index.php";',
+  '}',
+  'EOF'
+]
+
+[start]
+cmd = 'php -S 0.0.0.0:$PORT router.php'
