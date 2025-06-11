@@ -1,2 +1,8 @@
+[phases.setup]
+nixPkgs = ['php82', 'php82Packages.composer']
+
+[phases.install]
+cmds = ['composer install --no-dev --no-interaction']
+
 [start]
-cmd = 'php -S 0.0.0.0:$PORT -t docroot'
+cmd = 'php -S 0.0.0.0:$PORT'
