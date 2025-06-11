@@ -1,8 +1,14 @@
+[providers]
+php = "^8.2"
+
 [phases.setup]
 nixPkgs = ['php82', 'php82Packages.composer']
 
 [phases.install]
 cmds = ['composer install --no-dev --no-interaction']
+
+[variables]
+NIXPACKS_NO_CACHE = "1"
 
 [start]
 cmd = 'php -S 0.0.0.0:$PORT index.php'
