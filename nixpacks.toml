@@ -1,0 +1,31 @@
+[phases.setup]
+nixPkgs = [
+    'php81',
+    'php81Packages.composer',
+    'php81Extensions.pdo',
+    'php81Extensions.pdo_mysql',
+    'php81Extensions.mysqli',
+    'php81Extensions.mbstring',
+    'php81Extensions.xml',
+    'php81Extensions.curl',
+    'php81Extensions.zip',
+    'php81Extensions.gd',
+    'php81Extensions.intl',
+    'php81Extensions.bcmath',
+    'nodejs_18'
+]
+
+[phases.install]
+cmds = [
+    'composer install --no-dev --optimize-autoloader --no-interaction',
+    'php bin/console cache:clear --env=prod --no-interaction || true'
+]
+
+[phases.build]
+cmds = [
+    'npm ci --production --silent || echo "NPM build skipped"',
+    'npm run build --silent || echo "NPM build skipped"'
+]
+
+[start]
+cmd = 'php -S 0.0.0.0:$PORT -t docroot'
