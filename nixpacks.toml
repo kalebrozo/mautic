@@ -1,16 +1,6 @@
-# OPÇÃO 1: Se existe pasta public/
-[phases.setup]
-nixPkgs = ['php82', 'php82Packages.composer']
-
-[phases.install]
-cmds = ['composer install --no-dev --no-interaction']
-
-[start]
-cmd = 'php -S 0.0.0.0:$PORT -t public'
-
 # OPÇÃO 2: Se existe pasta web/
-# [start]
-# cmd = 'php -S 0.0.0.0:$PORT -t web'
+ [start]
+ cmd = 'php -S 0.0.0.0:$PORT -t web'
 
 # OPÇÃO 3: Se index.php está na raiz
 # [start]
