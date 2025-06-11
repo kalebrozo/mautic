@@ -1,10 +1,6 @@
-# OPÇÃO 2: Se existe pasta web/
- [start]
- cmd = 'php -S 0.0.0.0:$PORT -t web'
-
 # OPÇÃO 3: Se index.php está na raiz
-# [start]
-# cmd = 'php -S 0.0.0.0:$PORT'
+[start]
+cmd = 'php -S 0.0.0.0:$PORT'
 
 # OPÇÃO 4: Forçar criação do diretório
 # [phases.build]
