@@ -21,15 +21,14 @@ nixPkgs = [
 
 [phases.install]
 cmds = [
-    'composer install --no-dev --optimize-autoloader --no-interaction'
+    'php -d memory_limit=512M /nix/store/*/bin/composer install --no-dev --optimize-autoloader --no-interaction --no-scripts'
 ]
 
 [phases.build]
 cmds = [
     'npm ci --production --silent || echo "NPM build skipped"',
-    'npm run build --silent || echo "NPM build skipped"',
-    'php bin/console mautic:assets:generate --env=prod --no-interaction || echo "Assets generation skipped"'
+    'npm run build --silent || echo "NPM build skipped"'
 ]
 
 [start]
-cmd = 'php -S 0.0.0.0:$PORT -t docroot'
+cmd = 'php -d memory_limit=256M -S 0.0.0.0:$PORT -t docroot'
